@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<addon scheme="2.0" edition_type="ROOT,ULT:VENDOR">
+    <id>payfort_fort</id>
+    <name>PayFort payments</name>
+    <description>Lets you accept payments via PayFort Credit /Debit Cards, Sadad and Naps</description>
+    <version>1.0</version>
+    <default_language>EN</default_language>
+    <priority>20000</priority>
+    <position>20000</position>
+    <status>active</status>
+    <name>PayFort FORT</name>
+    <auto_install>MULTIVENDOR,ULTIMATE</auto_install>
+
+    <translations>
+		<item for="name" lang="AR">PayFort payments</item>
+		<item for="description" lang="AR">Lets you accept payments via PayFort Credit /Debit Cards, Sadad and Naps</item>
+    </translations>
+        
+    <settings>
+        <sections>
+            <section id="general">
+                <items>
+                    <item id="payfort_fort_settings">
+                        <type>template</type>
+                        <default_value>payfort_fort_settings.tpl</default_value>
+                    </item>
+                    <item id="payment_settings">
+                        <type>hidden</type>
+                        <default_value>a:8:{s:8:"language";s:5:"store";s:19:"merchant_identifier";s:0:"";s:11:"access_code";s:0:"";s:7:"command";s:8:"PURCHASE";s:14:"hash_algorithm";s:4:"sha1";s:18:"sha_in_pass_phrase";s:0:"";s:19:"sha_out_pass_phrase";s:0:"";s:4:"mode";s:7:"sandbox";}</default_value>
+                    </item>
+                </items>
+            </section>
+        </sections>
+    </settings>
+    <queries>
+        <item type="file">database/data.sql</item>
+        <item for="uninstall">DELETE FROM ?:payment_descriptions WHERE payment_id IN (SELECT payment_id FROM ?:payments WHERE processor_id IN (SELECT processor_id FROM ?:payment_processors WHERE processor_script IN ('payfort_fort_cc.php','payfort_fort_sadad.php','payfort_fort_naps.php')));</item>
+        <item for="uninstall">DELETE FROM ?:payments WHERE processor_id IN (SELECT processor_id FROM ?:payment_processors WHERE processor_script IN ('payfort_fort_cc.php','payfort_fort_sadad.php','payfort_fort_naps.php'));</item>
+        <item for="uninstall">DELETE FROM ?:payment_processors WHERE processor_script IN ('payfort_fort_cc.php','payfort_fort_sadad.php','payfort_fort_naps.php');</item>
+    </queries>
+    <language_variables>
+        <item lang="EN" id="payfort_fort_store_language">Store Language</item>
+        <item lang="AR" id="payfort_fort_store_language">Store Language</item>
+
+        <item lang="EN" id="payfort_fort_english">English</item>
+        <item lang="AR" id="payfort_fort_english">English</item>
+        
+        <item lang="EN" id="payfort_fort_arabic">Arabic</item>
+        <item lang="AR" id="payfort_fort_arabic">Arabic</item>
+        
+        <item lang="EN" id="payfort_fort_merchant_identifier">Merchant Identifier</item>
+        <item lang="AR" id="payfort_fort_merchant_identifier">Merchant Identifier</item>
+        
+        <item lang="EN" id="payfort_fort_access_code">Access Code</item>
+        <item lang="AR" id="payfort_fort_access_code">Access Code</item>
+        
+        <item lang="EN" id="payfort_fort_command">Command</item>
+        <item lang="AR" id="payfort_fort_command">Command</item>
+        
+        <item lang="EN" id="payfort_fort_purchase">PURCHASE</item>
+        <item lang="AR" id="payfort_fort_purchase">PURCHASE</item>
+        
+        <item lang="EN" id="payfort_fort_authorization">AUTHORIZATION</item>
+        <item lang="AR" id="payfort_fort_authorization">AUTHORIZATION</item>
+        
+        <item lang="EN" id="payfort_fort_hash_algorithm">Hash Algorithm</item>
+        <item lang="AR" id="payfort_fort_hash_algorithm">Hash Algorithm</item>
+        
+        <item lang="EN" id="payfort_fort_request_sah_phrase">Request SHA Phrase</item>
+        <item lang="AR" id="payfort_fort_request_sah_phrase">Request SHA Phrase</item>
+        
+        <item lang="EN" id="payfort_fort_response_sah_phrase">Response SHA Phrase</item>
+        <item lang="AR" id="payfort_fort_response_sah_phrase">Response SHA Phrase</item>
+        
+        <item lang="EN" id="payfort_fort_mode">Mode</item>
+        <item lang="AR" id="payfort_fort_mode">Mode</item>
+        
+        <item lang="EN" id="payfort_fort_sandbox">sandbox</item>
+        <item lang="AR" id="payfort_fort_sandbox">sandbox</item>
+        
+        <item lang="EN" id="payfort_fort_live">live</item>
+        <item lang="AR" id="payfort_fort_live">live</item>
+        
+        <item lang="EN" id="payfort_fort_host_to_host_url">Host to Host URL</item>
+        <item lang="AR" id="payfort_fort_host_to_host_url">Host to Host URL</item>
+        
+        <item lang="EN" id="payfort_fort_integration_type">Integration Type</item>
+        <item lang="AR" id="payfort_fort_integration_type">Integration Type</item>
+        
+        <item lang="EN" id="payfort_fort_redirection">Redirection</item>
+        <item lang="AR" id="payfort_fort_redirection">Redirection</item>
+        
+        <item lang="EN" id="payfort_fort_merchant_page">Merchant Page</item>
+        <item lang="AR" id="payfort_fort_merchant_page">Merchant Page</item>
+        
+        <item lang="EN" id="text_payfort_fort_fill_general_settings_message"><![CDATA[<b>Note:</b> Don't forget to fill PayFort settings data in (Administration > Add-ons > PayFort payments)]]></item>
+        <item lang="AR" id="text_payfort_fort_fill_general_settings_message"><![CDATA[<b>Note:</b> Don't forget to fill PayFort settings data in (Administration > Add-ons > PayFort payments)]]></item>
+    </language_variables>
+    <!--<functions>
+        <item for="uninstall">fn_payfort_fort_delete_payment_processors</item>
+    </functions>-->
+</addon>
