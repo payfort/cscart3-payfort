@@ -3,7 +3,7 @@
     <id>payfort_fort</id>
     <name>PayFort payments</name>
     <description>Lets you accept payments via PayFort Credit /Debit Cards, Sadad and Naps</description>
-    <version>1.0</version>
+    <version>1.2.0</version>
     <default_language>EN</default_language>
     <priority>20000</priority>
     <position>20000</position>
@@ -26,7 +26,8 @@
                     </item>
                     <item id="payment_settings">
                         <type>hidden</type>
-                        <default_value>a:8:{s:8:"language";s:5:"store";s:19:"merchant_identifier";s:0:"";s:11:"access_code";s:0:"";s:7:"command";s:8:"PURCHASE";s:14:"hash_algorithm";s:4:"sha1";s:18:"sha_in_pass_phrase";s:0:"";s:19:"sha_out_pass_phrase";s:0:"";s:4:"mode";s:7:"sandbox";}</default_value>
+                        
+                        <default_value>a:10:{s:8:"language";s:5:"store";s:19:"merchant_identifier";s:0:"";s:11:"access_code";s:0:"";s:7:"command";s:8:"PURCHASE";s:14:"hash_algorithm";s:4:"sha1";s:18:"sha_in_pass_phrase";s:0:"";s:19:"sha_out_pass_phrase";s:0:"";s:4:"mode";s:7:"sandbox";s:16:"gateway_currency";s:4:"base";s:15:"order_placement";s:3:"all";}</default_value>
                     </item>
                 </items>
             </section>
@@ -93,8 +94,47 @@
         <item lang="EN" id="payfort_fort_merchant_page">Merchant Page</item>
         <item lang="AR" id="payfort_fort_merchant_page">Merchant Page</item>
         
+        <item lang="EN" id="payfort_fort_merchant_page2">Merchant Page 2.0</item>
+        <item lang="AR" id="payfort_fort_merchant_page2">Merchant Page 2.0</item>
+        
         <item lang="EN" id="text_payfort_fort_fill_general_settings_message"><![CDATA[<b>Note:</b> Don't forget to fill PayFort settings data in (Administration > Add-ons > PayFort payments)]]></item>
         <item lang="AR" id="text_payfort_fort_fill_general_settings_message"><![CDATA[<b>Note:</b> Don't forget to fill PayFort settings data in (Administration > Add-ons > PayFort payments)]]></item>
+        
+        <item lang="EN" id="gateway_currency">Gateway Currency</item>
+        <item lang="AR" id="gateway_currency">Gateway Currency</item>
+        
+        <item lang="EN" id="base_currency">Base Currency</item>
+        <item lang="AR" id="base_currency">Base Currency</item>
+        
+        <item lang="EN" id="front_currency">Front Currency</item>
+        <item lang="AR" id="front_currency">Front Currency</item>
+        
+        <item lang="EN" id="help_gateway_currency">The Currency should be sent to payment gateway.</item>
+        <item lang="AR" id="help_gateway_currency">The Currency should be sent to payment gateway.</item>
+        
+        <item lang="EN" id="error_invalid_signature">Invalid response signature.</item>
+        <item lang="AR" id="error_invalid_signature">Invalid response signature.</item>
+        
+        <item lang="EN" id="error_transaction_error_1">An error occurred while making the transaction. Please try again</item>
+        <item lang="AR" id="error_transaction_error_1">An error occurred while making the transaction. Please try again</item>
+        
+        <item lang="EN" id="error_transaction_error_2">An error occurred while making the transaction. Please try again. (Error message: %s)</item>
+        <item lang="AR" id="error_transaction_error_2">An error occurred while making the transaction. Please try again. (Error message: %s)</item>
+        
+        <item lang="EN" id="error_response_unknown">Response Unknown</item>
+        <item lang="AR" id="error_response_unknown">Response Unknown</item>
+        
+        <item lang="EN" id="text_payment_canceled">You have canceled the payment, please try again.</item>
+        <item lang="AR" id="text_payment_canceled">You have canceled the payment, please try again.</item>
+        
+        <item lang="EN" id="order_placement">Order Placement</item>
+        <item lang="AR" id="order_placement">Order Placement</item>
+        
+        <item lang="EN" id="always">Always</item>
+        <item lang="AR" id="always">Always</item>
+        
+        <item lang="EN" id="on_success">On Success</item>
+        <item lang="AR" id="on_success">On Success</item>
     </language_variables>
     <!--<functions>
         <item for="uninstall">fn_payfort_fort_delete_payment_processors</item>
