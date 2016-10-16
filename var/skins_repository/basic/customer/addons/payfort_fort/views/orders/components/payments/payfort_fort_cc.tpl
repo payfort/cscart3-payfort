@@ -1,7 +1,7 @@
 {if isset($payment_method.params.integration_type) and $payment_method.params.integration_type eq 'merchantPage'}
 <link href="{$config.skin_path}/addons/payfort_fort/checkout.css" rel="stylesheet" type="text/css" />
-{script src="addons/payfort_fort/js/checkout.js"}
-<div class="form-payment payment-delim clearfix">
+{script src="addons/payfort_fort/js/payfort_fort.js"}
+<div class="form-payment clearfix">
     {if $payments|count == 1}
             {if $payment.image}
                     <span class="payment-image">
@@ -23,7 +23,7 @@
     <div class="pf-iframe-background" id="div-pf-iframe" style="display:none">
         <div class="pf-iframe-container">
             <span class="pf-close-container">
-            <i class="pf-iframe-close" onclick="fn_payfort_fort_close_popup()"></i>
+            <i class="pf-iframe-close" onclick="payfortFortMerchantPage.closePopup()"></i>
             </span>
             <!--<i class="fa fa-spinner fa-spin pf-iframe-spin"></i>-->
             <div class="pf-iframe-spin"></div>
@@ -59,7 +59,7 @@
                                 value: v
                             }).appendTo('#payfort_payment_form'); 
                         });
-                        fn_payfort_fort_show_merchant_page(data.url);
+                        payfortFortMerchantPage.showMerchantPage(data.url);
                     }
                     else {
                         location.reload();
@@ -71,5 +71,7 @@
     });
 </script>
 {/literal}
+{elseif isset($payment_method.params.integration_type) and $payment_method.params.integration_type eq 'merchantPage2'}
+    {include file="addons/payfort_fort/views/orders/components/payments/merchant_page2.tpl"}
 {/if}
 

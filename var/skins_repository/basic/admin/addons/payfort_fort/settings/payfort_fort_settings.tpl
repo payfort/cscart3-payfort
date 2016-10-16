@@ -51,6 +51,22 @@
         <option value="live"{if $payfort_fort_settings.payment_settings.mode eq "live"} selected="selected"{/if}>{$lang.payfort_fort_live}</option>
     </select>
 </div>
+        
+<div class="form-field">
+    <label class="left description" for="gateway_currency">{$lang.gateway_currency}:</label>
+    <select name="payfort_fort_settings[payment_settings][gateway_currency]" id="gateway_currency">
+        <option value="base"{if $payfort_fort_settings.payment_settings.gateway_currency eq "base"} selected="selected"{/if}>{$lang.base_currency}</option>
+        <option value="front"{if $payfort_fort_settings.payment_settings.gateway_currency eq "front"} selected="selected"{/if}>{$lang.front_currency}</option>
+    </select>
+</div>
+        
+<div class="form-field">
+    <label class="left description" for="order_placement">{$lang.order_placement}:</label>
+    <select name="payfort_fort_settings[payment_settings][order_placement]" id="order_placement">
+        <option value="all"{if $payfort_fort_settings.payment_settings.order_placement eq "all"} selected="selected"{/if}>{$lang.always}</option>
+        <option value="success"{if $payfort_fort_settings.payment_settings.order_placement eq "success"} selected="selected"{/if}>{$lang.on_success}</option>
+    </select>
+</div>
 {assign var="payfort_fort_host_url" value=''|fn_payfort_fort_get_host_to_host_url}
 <div class="form-field">
     <label class="left description" for="payfort_fort_mode"><strong>{$lang.payfort_fort_host_to_host_url}:</strong></label>

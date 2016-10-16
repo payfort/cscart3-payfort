@@ -24,6 +24,31 @@ function fn_get_payfort_fort_settings($lang_code = DESCR_SL)
     return $payfort_fort_settings['general'];
 }
 
+function fn_payfort_fort_get_payment_methods(&$payment_methods, &$auth)
+{
+    $area = AREA;
+    if($area == 'C') {
+        
+        foreach($payment_methods as $k => $payment ) {
+            $processor_data = fn_get_processor_data($payment['payment_id']);
+            if($processor_data['processor_script'] == 'payfort_fort_sadad.php' || $processor_data['processor_script'] == 'payfort_fort_naps.php') {
+                if($processor_data['processor_script'] == 'payfort_fort_sadad.php') {
+                    $allowedCurrency = 'SAR';
+                }
+                if($processor_data['processor_script'] == 'payfort_fort_naps.php') {
+                    $allowedCurrency = 'QAR';
+                }
+                $pfHelper = Payfort_Fort_Helper::getInstance();
+                $currency = $pfHelper->getFortCurrency(CART_PRIMARY_CURRENCY, CART_SECONDARY_CURRENCY);
+                
+                if($currency != $allowedCurrency) {
+                    unset($payment_methods[$k]);
+                }
+            }
+        }
+    }
+}
+
 //function fn_payfort_fort_pre_place_order(&$cart, &$allow) {
     //$cart['rewrite_order_id'] = array();
 //}

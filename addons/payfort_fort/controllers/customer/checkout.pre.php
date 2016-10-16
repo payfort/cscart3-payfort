@@ -8,9 +8,9 @@ if ($mode == 'place_order') {
             if(!empty($cart['failed_order_id']) || !empty($cart['processed_order_id'])) {
                 $_order_ids = !empty($cart['failed_order_id']) ? $cart['failed_order_id'] : $cart['processed_order_id'];
 
-                foreach ($_order_ids as $_order_id) {
+                /*foreach ($_order_ids as $_order_id) {
                         fn_delete_order($_order_id);
-                }
+                }*/
                 $cart['rewrite_order_id'] = array();
                 unset($cart['failed_order_id'], $cart['processed_order_id']);
             }
