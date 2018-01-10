@@ -47,6 +47,10 @@ class Payfort_Fort_Payment
             if ($paymentMethod == PAYFORT_FORT_PAYMENT_METHOD_SADAD) {
                 $gatewayParams['payment_option'] = 'SADAD';
             }
+            elseif ($paymentMethod == PAYFORT_FORT_PAYMENT_METHOD_INSTALLMENTS) {
+                $gatewayParams['installments'] = 'STANDALONE';
+                $gatewayParams['command']      = 'PURCHASE';    
+            }            
             elseif ($paymentMethod == PAYFORT_FORT_PAYMENT_METHOD_NAPS) {
                 $gatewayParams['payment_option']    = 'NAPS';
                 $gatewayParams['order_description'] = $orderId;
@@ -56,6 +60,15 @@ class Payfort_Fort_Payment
             $gatewayParams['service_command'] = 'TOKENIZATION';
             $gatewayParams['return_url']      = $this->pfHelper->getReturnUrl('merchantPageResponse');
         }
+        if($paymentMethod == PAYFORT_FORT_PAYMENT_METHOD_INSTALLMENTS && $integrationType == PAYFORT_FORT_INTEGRATION_TYPE_MERCAHNT_PAGE){
+                $baseCurrency                    = $this->pfHelper->getBaseCurrency();
+                $orderCurrency                   = $this->pfOrder->getCurrencyCode();
+                $currency                        = $this->pfHelper->getFortCurrency($baseCurrency, $orderCurrency);
+                $gatewayParams['currency']       = strtoupper($currency);
+                $gatewayParams['installments']   = 'STANDALONE';
+                $gatewayParams['amount']         = $this->pfHelper->convertFortAmount($this->pfOrder->getTotal(), $this->pfOrder->getCurrencyValue(), $currency);
+                $gatewayParams['return_url']     = $this->pfHelper->getReturnUrl('merchantPageResponse');
+        }        
         $signature                  = $this->pfHelper->calculateSignature($gatewayParams, 'request');
         $gatewayParams['signature'] = $signature;
 
@@ -198,7 +211,7 @@ class Payfort_Fort_Payment
                 }
             }
             if (substr($responseCode, 2) == '000') {
-                if ($paymentMethod == PAYFORT_FORT_PAYMENT_METHOD_CC && ($integrationType == PAYFORT_FORT_INTEGRATION_TYPE_MERCAHNT_PAGE || $integrationType == PAYFORT_FORT_INTEGRATION_TYPE_MERCAHNT_PAGE2)) {
+                if (($payment_method == PAYFORT_FORT_PAYMENT_METHOD_CC && ($integrationType == PAYFORT_FORT_INTEGRATION_TYPE_MERCAHNT_PAGE || $integrationType == PAYFORT_FORT_INTEGRATION_TYPE_MERCAHNT_PAGE2))||($payment_method == PAYFORT_FORT_PAYMENT_METHOD_INSTALLMENTS && $integrationType == PAYFORT_FORT_INTEGRATION_TYPE_MERCAHNT_PAGE)) {
                     $host2HostParams = $this->merchantPageNotifyFort($responseParams, $orderId);
                     return $this->handleFortResponse($host2HostParams, 'online', $payment_method, 'cc_merchant_page_h2h');
                 }
@@ -236,6 +249,7 @@ class Payfort_Fort_Payment
         $orderCurrency = $this->pfOrder->getCurrencyCode();
         $currency      = $this->pfHelper->getFortCurrency($baseCurrency, $orderCurrency);
         $language      = $this->pfConfig->getLanguage();
+        $paymentMethod = $this->pfOrder->getPaymentMethod();
         $postData      = array(
             'merchant_reference'  => $fortParams['merchant_reference'],
             'access_code'         => $this->pfConfig->getAccessCode(),
@@ -249,6 +263,13 @@ class Payfort_Fort_Payment
             'language'            => $language,
             'return_url'          => $this->pfHelper->getReturnUrl('responseOnline')
         );
+        var_dump($paymentMethod['processor']); die();
+        if(!empty($paymentMethod['processor']) && $paymentMethod["processor"] == 'PayFort Installments') {
+            $postData['installments']            = 'YES';
+            $postData['plan_code']               = $fortParams['plan_code'];
+            $postData['issuer_code']             = $fortParams['issuer_code'];
+            $postData['command']                 = 'PURCHASE';
+        }
         $customerName = $this->pfOrder->getCustomerName();
         if (!empty($customerName)) {
             $postData['customer_name'] = $this->pfOrder->getCustomerName();

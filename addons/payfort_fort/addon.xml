@@ -35,9 +35,9 @@
     </settings>
     <queries>
         <item type="file">database/data.sql</item>
-        <item for="uninstall">DELETE FROM ?:payment_descriptions WHERE payment_id IN (SELECT payment_id FROM ?:payments WHERE processor_id IN (SELECT processor_id FROM ?:payment_processors WHERE processor_script IN ('payfort_fort_cc.php','payfort_fort_sadad.php','payfort_fort_naps.php')));</item>
-        <item for="uninstall">DELETE FROM ?:payments WHERE processor_id IN (SELECT processor_id FROM ?:payment_processors WHERE processor_script IN ('payfort_fort_cc.php','payfort_fort_sadad.php','payfort_fort_naps.php'));</item>
-        <item for="uninstall">DELETE FROM ?:payment_processors WHERE processor_script IN ('payfort_fort_cc.php','payfort_fort_sadad.php','payfort_fort_naps.php');</item>
+        <item for="uninstall">DELETE FROM ?:payment_descriptions WHERE payment_id IN (SELECT payment_id FROM ?:payments WHERE processor_id IN (SELECT processor_id FROM ?:payment_processors WHERE processor_script IN ('payfort_fort_cc.php', 'payfort_fort_installments.php','payfort_fort_sadad.php','payfort_fort_naps.php')));</item>
+        <item for="uninstall">DELETE FROM ?:payments WHERE processor_id IN (SELECT processor_id FROM ?:payment_processors WHERE processor_script IN ('payfort_fort_cc.php', 'payfort_fort_installments.php', 'payfort_fort_sadad.php','payfort_fort_naps.php'));</item>
+        <item for="uninstall">DELETE FROM ?:payment_processors WHERE processor_script IN ('payfort_fort_cc.php' ,'payfort_fort_installments.php','payfort_fort_sadad.php','payfort_fort_naps.php');</item>
     </queries>
     <language_variables>
         <item lang="EN" id="payfort_fort_store_language">Store Language</item>
