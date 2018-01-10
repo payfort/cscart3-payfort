@@ -212,7 +212,7 @@ class Payfort_Fort_Payment
             }
             if (substr($responseCode, 2) == '000') {
                 if (($payment_method == PAYFORT_FORT_PAYMENT_METHOD_CC && ($integrationType == PAYFORT_FORT_INTEGRATION_TYPE_MERCAHNT_PAGE || $integrationType == PAYFORT_FORT_INTEGRATION_TYPE_MERCAHNT_PAGE2))||($payment_method == PAYFORT_FORT_PAYMENT_METHOD_INSTALLMENTS && $integrationType == PAYFORT_FORT_INTEGRATION_TYPE_MERCAHNT_PAGE)) {
-                    $host2HostParams = $this->merchantPageNotifyFort($responseParams, $orderId);
+                    $host2HostParams = $this->merchantPageNotifyFort($responseParams, $orderId, $payment_method);
                     return $this->handleFortResponse($host2HostParams, 'online', $payment_method, 'cc_merchant_page_h2h');
                 }
                 else { //success order
@@ -240,7 +240,7 @@ class Payfort_Fort_Payment
         return true;
     }
 
-    private function merchantPageNotifyFort($fortParams, $orderId)
+    private function merchantPageNotifyFort($fortParams, $orderId, $paymentMethod = '')
     {
         //send host to host
         $this->pfOrder->loadOrder($orderId);
@@ -249,7 +249,6 @@ class Payfort_Fort_Payment
         $orderCurrency = $this->pfOrder->getCurrencyCode();
         $currency      = $this->pfHelper->getFortCurrency($baseCurrency, $orderCurrency);
         $language      = $this->pfConfig->getLanguage();
-        $paymentMethod = $this->pfOrder->getPaymentMethod();
         $postData      = array(
             'merchant_reference'  => $fortParams['merchant_reference'],
             'access_code'         => $this->pfConfig->getAccessCode(),
@@ -263,8 +262,7 @@ class Payfort_Fort_Payment
             'language'            => $language,
             'return_url'          => $this->pfHelper->getReturnUrl('responseOnline')
         );
-        var_dump($paymentMethod['processor']); die();
-        if(!empty($paymentMethod['processor']) && $paymentMethod["processor"] == 'PayFort Installments') {
+        if(!empty($paymentMethod) && $paymentMethod == PAYFORT_FORT_PAYMENT_METHOD_INSTALLMENTS) {
             $postData['installments']            = 'YES';
             $postData['plan_code']               = $fortParams['plan_code'];
             $postData['issuer_code']             = $fortParams['issuer_code'];
