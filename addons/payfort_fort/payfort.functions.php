@@ -9,7 +9,7 @@ function fn_payfort_fort_process_request($order_id, $order_info, $payment_method
     $pfPayment = Payfort_Fort_Payment::getInstance();
 
     $integration_type = PAYFORT_FORT_INTEGRATION_TYPE_REDIRECTION;
-    if ($payment_method == PAYFORT_FORT_PAYMENT_METHOD_CC) {
+    if ($payment_method == PAYFORT_FORT_PAYMENT_METHOD_CC || $payment_method == PAYFORT_FORT_PAYMENT_METHOD_INSTALLMENTS) {
         $integration_type = $pfOrder->getIntegrationType();
     }
 //    if ($order_info['status'] == STATUS_INCOMPLETED_ORDER) {
