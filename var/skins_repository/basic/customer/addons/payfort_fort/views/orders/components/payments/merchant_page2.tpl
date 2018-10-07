@@ -23,7 +23,7 @@
 		
 		<div class="form-field">
 			<label for="payfort_fort_card_number{$id_suffix}" class="cm-required cm-custom (validate_cc)">{$lang.card_number}</label>
-			<input id="payfort_fort_card_number{$id_suffix}" size="35" maxlength="16" type="text" name="payment_info[card_number]" value="" class="input-text cm-autocomplete-off" />
+			<input id="payfort_fort_card_number{$id_suffix}" size="35" maxlength="19" type="text" name="payment_info[card_number]" value="" class="input-text cm-autocomplete-off" />
 		</div>
 
 		<div class="form-field">
