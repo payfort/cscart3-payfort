@@ -98,7 +98,7 @@ class Payfort_Fort_Helper
             'BHD' => 3,
             'LYD' => 3,
             'IQD' => 3,
-            'CLF' => 4,
+            'CLF' => 0,
             'BIF' => 0,
             'DJF' => 0,
             'GNF' => 0, 
@@ -113,6 +113,7 @@ class Payfort_Fort_Helper
             'VND' => 0,
             'VUV' => 0,
             'XAF' => 0,
+            'BYR' => 0,
         );
         if (isset($arrCurrencies[$currency])) {
             $decimalPoint = $arrCurrencies[$currency];
